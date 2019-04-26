@@ -1,0 +1,166 @@
+.navigation {
+
+    &__checkbox{
+        display: none;
+    }
+
+    &__button { // the nav-circle
+        background-color: $color-white;
+        height: 7rem;
+        width: 7rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6rem;
+        right: 6rem;
+        z-index: 2000;
+        box-shadow: 0 1rem 3rem rgba($color-black, .1);
+        text-align: center;
+        cursor: pointer;
+
+        @include respond(tab-port) {
+            top: 4rem;
+            right: 4rem;
+        }
+
+        @include respond(phone) {
+            top: 3rem;
+            right: 3rem;
+        }
+    }
+
+    &__background { // the green circle (behind the nav-circle)
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6.5rem;
+        right: 6.5rem;
+        background-image: radial-gradient($color-primary-light, $color-primary-dark);
+        z-index: 1000;
+        transition: transform .8s cubic-bezier(0.86, 0, 0.07, 1); // the flow of the animation (there is a tool for this)
+
+        @include respond(tab-port) {
+            top: 4.5rem;
+            right: 4.5rem;
+        }
+
+        @include respond(phone) {
+            top: 3.5rem;
+            right: 3.5rem;
+        }
+    }
+
+    &__nav { // the green container occupying the whole page
+        height: 100vh;
+        position: fixed; // this makes sure that even if you sctolled the you only see the nav
+        top: 0;
+        right: 0;
+        z-index: 1500;
+
+        opacity: 0; // make the nav opale
+        width: 0; // make the nav disappear 
+        transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    &__list {
+        @include absCenter;
+        list-style: none;
+        text-align: center;
+        width: 100%;
+    }
+
+    &__item {
+        margin: 1rem; // spacing between the lines
+    }
+
+    &__link { // the link text
+
+        &:link,
+        &:visited {
+            display: inline-block; // has to be inline-block otherwise the padding and the left translate won't work
+            font-size: 3rem;
+            font-weight: 300;
+            padding: 1rem 2rem;
+            color: $color-white;
+            text-decoration: none;
+            text-transform: uppercase;
+            background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+            background-size: 220%; // by increasing the background with a 100% the breaking pont will shift right
+            transition: all .4s;
+
+            span { // the numbers
+                display: inline-block;
+                margin-right: 1rem;
+            }
+        }
+        
+        &:hover,
+        &:active {
+            background-position: 100%; // shifting the background completely to the left side
+            color: $color-primary;
+            transform: translateX(1rem);
+        }
+    }
+
+    // CHECKBOX HACK
+
+    &__checkbox:checked ~ &__background {
+        transform: scale(80);
+    }
+
+    &__checkbox:checked ~ &__nav { // make the nav visible and clicable again
+        opacity: 1;
+        width: 100%;
+    }
+
+    // ICON
+
+    &__icon {
+        position: relative;
+        margin-top: 3.5rem;
+
+        &,
+        &::before,
+        &::after {
+            width: 3rem;
+            height: 2px;
+            background-color: $color-gray-dark-3;
+            display: inline-block;
+        }
+
+        &::before,
+        &::after {
+            content: ""; // in order to make the pseudo-elements appear on the page we need to define the content
+            position: absolute;
+            left: 0;
+            transition: all .2s;
+        }
+
+        &::before { top: -.8rem;}
+        &::after { top: .8rem;}
+    }
+
+    // for the little separation between the icon lines
+
+    &__button:hover &__icon::before {
+        top: -1rem;
+    }
+
+    &__button:hover &__icon::after {
+        top: 1rem;
+    }
+
+    &__checkbox:checked + &__button &__icon { // preparing the "X"
+        background-color: transparent;
+    }
+
+    &__checkbox:checked + &__button &__icon::before{
+        top: 0;
+        transform: rotate(135deg);
+    }
+
+    &__checkbox:checked + &__button &__icon::after{
+        top: 0;
+        transform: rotate(-135deg);
+    }
+}

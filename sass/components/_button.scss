@@ -1,0 +1,99 @@
+.btn {
+    &, // we need this to apply the styling to our <button> element, since it hasn't got :link and :visited pseudo classes
+    &:link,
+    &:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block;
+        border-radius: 10rem;
+        transition: all .2s;
+        position: relative; /* This is for the secondary animation ".btn::after" element */
+        font-size: $default-font-size;
+
+        // Change for the <button> element (with forms we have to use the button> element in order to be able to submit)
+        border: none;
+        cursor: pointer;
+    }
+
+    /* HERE WE STYLE THE FIRST ANIMATION FOR THE BTN (note the transition property above)*/
+    &:hover {
+        transform: translateY(-.3rem);
+        box-shadow: 0 1rem 2rem rgba($color-black,.2); 
+
+        &::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
+    }
+
+    &:active,
+    &:focus {
+        outline: none;
+        transform: translateY(-.1rem);
+        box-shadow: 0 .5rem 1rem rgba($color-black,.2);
+    }
+
+    &--white {
+        background-color: $color-white;
+        color: $color-gray-dark;
+
+        &::after {
+            background-color: $color-white;
+        }
+    }
+
+    &--green {
+        background-color: $color-primary;
+        color: $color-white;
+
+        &::after {
+            background-color: $color-primary;
+        }
+    }
+
+    /* HERE WE STYLE THE SECONDARY ANIMATION FOR THE BTN */
+    &::after {
+        content: ""; /* Always specify, even if left empty. */
+        display: inline-block; /* because our btn is also inline-block */
+        width: 100%;
+        height: 100%; /* Pseudo-elements are the child of our btn. */
+        border-radius: 10rem;
+        position: absolute; /* In order to hide it behind the btn. */
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all .4s;
+    }
+
+
+    &--animated {
+        animation: moveInBottom 0.5s ease-out .75s;
+        animation-fill-mode: backwards; /* This mode automaticly applies the "0 opacity" (which we added to the @keyframes moveInBottom) to the btn before the animation starts. */
+    }
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: $default-font-size;
+        color: $color-primary;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid $color-primary;
+        padding: 3px;
+        transition: all .2s;
+    }
+
+    &:hover {
+        background-color: $color-primary;
+        color: $color-white;
+        box-shadow: 0 1rem 2rem rgba($color-black, .15);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        box-shadow: 0 .5rem 1rem rgba($color-black, .15);
+        transform: translateY(0);
+    }
+}

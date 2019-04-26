@@ -1,0 +1,46 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    // THIS DEFINES WHAT 1 REM IS = 16px * 0.625 = 10px OR 10px / 16px = 62.5%
+    font-size: 62.5%; // this doesn't go in typography because it acts more like an overall setting 
+
+    // ALWAYS THE LARGER MEDIA QUERIES COMES 1st
+
+    @include respond(tab-land) { // width < 1200?
+        font-size: 56.25%; // 1rem = 9px, 9 / 16 = 56.25%
+    }
+
+    @include respond(tab-port) { // width < 900?
+        font-size: 50%; // 1rem = 8px, 8 / 16 = 50%
+    }
+    /*
+    @include respond(phone) { font-size: 50%;} we don't need this one because it is the same font size as the "tab-port"
+    */
+
+    @include respond(big-desktop) { 
+        font-size: 75%; // 1 rem = 12px, 16 / 12 = 75%
+    }
+}
+
+
+body {
+    box-sizing: border-box;
+    padding: 3rem;
+
+    @include respond(tab-port) {
+        font-size: 50%;
+        padding: 0;
+    }
+}
+
+// when we select a text
+::selection {
+    background-color: $color-primary;
+    color: $color-white;
+}
